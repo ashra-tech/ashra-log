@@ -28,7 +28,7 @@ export default function Home() {
   console.log("data: ", data);
   return (
     <>
-      <h1>Let's see the simple example of log capture</h1>
+      <h1>Lets see the simple example of log capture</h1>
       <button onClick={() => setLogData(getLogMessages() as [])}>render</button>
       <ul>
         {logData.map((value: any, index) => {
