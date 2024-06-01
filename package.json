@@ -1,0 +1,38 @@
+{
+  "name": "ashra-log",
+  "description": "A simple console.log() capturing package",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashra-tech/ashra-log"
+  },
+  "bugs": {
+    "url": "https://github.com/ashra-tech/ashra-log/issues"
+  },
+  "homepage": "https://github.com/ashra-tech/ashra-log#readme",
+  "keywords": [
+    "ashra-log",
+    "console-log-capture",
+    "console-log",
+    "console-log-store",
+    "logger",
+    "dev"
+  ],
+  "author": "Ashra Tech <drash@ashra.academy>",
+  "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "build": "tsc",
+    "prepare": "npm run build"
+  }
+}
