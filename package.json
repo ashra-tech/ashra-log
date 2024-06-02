@@ -1,7 +1,7 @@
 {
   "name": "ashra-log",
   "description": "A simple console.log() capturing package",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
@@ -28,7 +28,8 @@
   "devDependencies": {
     "@types/node": "^18.15.11",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^1.6.0"
   },
   "scripts": {
     "start": "node src/index.ts",

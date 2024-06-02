@@ -1,14 +1,26 @@
 /** Store the original console.log function */
-const originalConsoleLog = console.log;
+const originalLog = console.log;
+/** Store the original console.warn function */
+const originalWarn = console.warn;
+/** Store the original console.error function */
+const originalError = console.error;
 
 let logMessages: any[] = [];
 
-/**  Override the console.log function */
-console.log = function (...args: any[]): void {
-  logMessages.push(args); /** store each message to the logMessages array */
+/**  Override the console.* function */
+console.log = function (...args) {
+  logMessages.push({ type: "log", message: args });
+  originalLog.apply(console, args);
+};
 
-  /** Call the original console.log function */
-  originalConsoleLog.apply(console, args);
+console.warn = function (...args) {
+  logMessages.push({ type: "warn", message: args });
+  originalWarn.apply(console, args);
+};
+
+console.error = function (...args) {
+  logMessages.push({ type: "error", message: args });
+  originalError.apply(console, args);
 };
 
 /**

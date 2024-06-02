@@ -1,6 +1,6 @@
 ## Ashra Log
 
-A simple console.log() capturing package
+A simple **console `log|warn|error`** capturing package
 
 ### Installing
 
