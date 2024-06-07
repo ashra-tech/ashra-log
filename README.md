@@ -1,26 +1,34 @@
-## Ashra Log
+## **[Ashra-Log](www.npmjs.com/package/ashra-log)** - Capture Your Console 
+Ashra Log can capture all your console output such as `[info, log, error, warn]` and HTTP request information that you can use later as your uses. In a line, we can say, **(Read Console With & Get Console)**. 
 
-A simple **console `log|warn|error`** capturing package
+## Why Ashra-log?
+- **[ashra-log](www.npmjs.com/package/ashra-log):** is a platform independence npm package you can use for all applications.
+- **[ashra-log](www.npmjs.com/package/ashra-log):** can work with also browser extension development content script
+- **[ashra-log](www.npmjs.com/package/ashra-log):** It's really lightweight and simple npm package
+- **[ashra-log](www.npmjs.com/package/ashra-log):** is accepting your ISSUE & PR on GitHub since its fully free.
+
+***So, why you are waiting? Just visite our Github Repository and make a star as a appreciate.***
 
 ### Installing
 
 **If you are using `npm package manager` then you can use this command**
 
 ```console
-npm install -D ashra-log
+npm install ashra-log
 ```
 
 **If you are using `yarn package manager` then you can use this command**
 
 ```console
-yarn add -D ashra-log
+yarn add ashra-log
 ```
 
 **If you are using `pnpm package manager` then you can use this command**
 
 ```console
-pnpm add -D ashra-log
+pnpm add ashra-log
 ```
+
 
 ### Uses Of **`ashra-log`**
 
