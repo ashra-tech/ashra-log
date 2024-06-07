@@ -1,18 +1,17 @@
-"use client";
 import { useEffect, useState } from "react";
 import { getLogMessages } from "ashra-log";
 
-export default function Home() {
+const LogViewer = () => {
   const [logs, setLogs] = useState<any[]>([]);
   useEffect(() => {
     fetch(
-      `https://jsonplaceholder.typicode.com/post/${Math.floor(
+      `https://jsonplaceholder.typicode.com/posts/${Math.floor(
         Math.random() * 100
       )}`
     )
       .then((respnose) => respnose.json())
       .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .catch((error) => console.log(error));
   }, []);
 
   const handleClick = () => {
@@ -33,4 +32,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default LogViewer;
