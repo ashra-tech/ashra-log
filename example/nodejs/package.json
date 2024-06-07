@@ -11,8 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "puppeteer": "^22.10.0",
-    "selenium-webdriver": "^4.21.0"
+    "ashra-log": "^0.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.2"
