@@ -1,15 +1,12 @@
-import puppeteer from "puppeteer";
+import { getLogMessages } from "ashra-log";
 
-(async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+console.log("Hello world!");
+console.log("Hello world! 2");
+console.log(["Sabbir", "Ashra"]);
+console.error("Error message");
+fetch("https://jsonplaceholder.typicode.com/todos/1")
+  .then((res) => res.json())
+  .then((content) => console.log(content))
+  .catch((err) => console.error(err));
 
-  // Capture console logs
-  page.on("console", async (msg) => console.log(msg.args().length));
-
-  await page.goto(
-    "https://coding-activity.vercel.app/coding-activity/664f459d76836c32a2957137"
-  );
-  page.viewport({ width: 1920, height: 1080 });
-  await browser.close();
-})();
+console.log(getLogMessages(true));
