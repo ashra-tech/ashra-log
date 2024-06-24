@@ -1,10 +1,12 @@
-import { CustomXMLHttpRequest } from "./utils";
+import { consoleMethods } from "./utils";
 
 let logMessages: Array<{ type: string; message: any }> = [];
 
 const originalLog = console.log;
 const originalWarn = console.warn;
 const originalError = console.error;
+const originalInfo = console.info;
+const originalDebug = console.debug;
 const originalFetch = window.fetch; /** intercept fetch request */
 
 console.log = function (...args) {
@@ -22,12 +24,40 @@ console.error = function (...args) {
   originalError.apply(console, args);
 };
 
+console.info = function (...args) {
+  logMessages.push({ type: "info", message: args });
+  originalInfo.apply(console, args);
+};
+
+console.debug = function (...args) {
+  logMessages.push({ type: "debug", message: args });
+  originalDebug.apply(console, args);
+};
+
+consoleMethods.forEach((method) => {
+  const originalMethod = console[method] as (...args: any[]) => void;
+  console[method] = function (...args: any[]) {
+    logMessages.push({ type: method.toString(), message: args });
+    originalMethod.apply(console, args);
+  };
+});
+
 window.fetch = async (...args) => {
   try {
     const response = await originalFetch(...args);
     if (!response.ok) {
       logMessages.push({
         type: "fetch-error",
+        message: {
+          url: response.url,
+          status: response.status,
+          statusText: response.statusText,
+          message: await response.text(),
+        },
+      });
+    } else if (response.ok) {
+      logMessages.push({
+        type: "fetch-success",
         message: {
           url: response.url,
           status: response.status,
