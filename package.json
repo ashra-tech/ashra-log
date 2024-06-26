@@ -1,7 +1,7 @@
 {
   "name": "ashra-log",
   "description": "Ashra Log can capture all your console output such as [info, log, error, warn] and HTTP request information that you can use later as your uses.",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {

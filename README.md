@@ -1,6 +1,6 @@
 ## **[Ashra-Log](https://www.npmjs.com/package/ashra-log)** - Capture Your Console
 
-**`Ashra Log`** can capture all your console output such as `[info, log, error, warn]` and HTTP request information that you can use later as your uses. In a line, we can say, **(Read Console With & Get Console)**.
+**`Ashra Log`** can capture all your console output such as `[info, log, error, warn]and etc` and HTTP request information that you can use later as your uses. In a line, we can say, **(Read Console With & Get Console)**.
 
 ## Why Ashra-log?
 

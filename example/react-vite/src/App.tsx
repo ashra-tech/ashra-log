@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getLogMessages } from "ashra-log";
+import { getLogMessages } from "../../../src/index";
 
 const LogViewer = () => {
   const [logs, setLogs] = useState<any[]>([]);
+  const data: any[] = [];
+
   useEffect(() => {
     fetch(
       `https://jsonplaceholder.typicode.com/posts/${Math.floor(
@@ -10,16 +12,14 @@ const LogViewer = () => {
       )}`
     )
       .then((respnose) => respnose.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+      .then((data) => console.log("data: ", data))
+      .catch((error) => console.log("error: ", error));
   }, []);
 
   const handleClick = () => {
-    const logs = getLogMessages(false);
-    setLogs(logs);
+    setLogs(getLogMessages());
     alert(JSON.stringify(logs, null, 2)); // Display logs as an alert (you can customize this as needed)
   };
-
   return (
     <div>
       <button onClick={handleClick}>Click Me</button>
@@ -28,6 +28,11 @@ const LogViewer = () => {
           <div key={index}>
             <strong>{log.type.toUpperCase()}</strong>
           </div>
+        ))}
+      </div>
+      <div style={{ background: "blue" }}>
+        {data.map((it: any, i) => (
+          <h1 key={i}>hello {it?.name}</h1>
         ))}
       </div>
     </div>
