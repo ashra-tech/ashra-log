@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { getLogMessages } from "ashra-log";
+import { getLogMessages } from "../../../src/index";
 
 const LogViewer = () => {
   const [logs, setLogs] = useState<any[]>([]);
+  const data: any[] = [];
 
   useEffect(() => {
     fetch(
-      `https://jsonplaceholder.typicode.com/post/${Math.floor(
+      `https://jsonplaceholder.typicode.com/posts/${Math.floor(
         Math.random() * 100
       )}`
     )
@@ -27,6 +28,11 @@ const LogViewer = () => {
           <div key={index}>
             <strong>{log.type.toUpperCase()}</strong>
           </div>
+        ))}
+      </div>
+      <div style={{ background: "blue" }}>
+        {data.map((it: any, i) => (
+          <h1 key={i}>hello {it?.name}</h1>
         ))}
       </div>
     </div>

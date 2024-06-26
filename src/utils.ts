@@ -1,4 +1,4 @@
-export interface ConsoleMethods {
+export interface IConsoleMethods {
   log: (...args: any[]) => void;
   warn: (...args: any[]) => void;
   error: (...args: any[]) => void;
@@ -14,7 +14,7 @@ export interface ConsoleMethods {
   timeLog: (label?: string, ...args: any[]) => void;
 }
 
-export const consoleMethods: (keyof ConsoleMethods)[] = [
+export const consoleMethods: (keyof IConsoleMethods)[] = [
   "log",
   "warn",
   "info",

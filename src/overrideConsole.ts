@@ -1,27 +1,90 @@
-import { consoleMethods } from "./utils";
+let logMessages: Array<{ type: string; message: any; where?: string }> = [];
+const originalFetch = window.fetch;
+const originalLog = console.log;
+const originalWarn = console.warn;
+const originalInfo = console.info;
+const originalDebug = console.debug;
+const originalDir = console.dir;
+const originalTrace = console.trace;
+const originalTable = console.table;
+const originalGroup = console.group;
+const originalGroupEnd = console.groupEnd;
+const originalTime = console.time;
+const originalTimeEnd = console.timeEnd;
+const originalTimeLog = console.timeLog;
 
-let logMessages: Array<{ type: string; message: any }> = [];
-const originalFetch = window.fetch; /** intercept fetch request */
+console.log = function (...args) {
+  logMessages.push({ type: "log", message: args });
+  originalLog.apply(console, args);
+};
 
-consoleMethods.forEach((method) => {
-  const originalMethod = console[method] as (...args: any[]) => void;
-  console[method] = function (...args: any[]) {
-    logMessages.push({ type: method.toString(), message: args });
-    originalMethod.apply(console, args);
-  };
-});
+console.warn = function (...args) {
+  logMessages.push({ type: "warn", message: args });
+  originalWarn.apply(console, args);
+};
+
+console.info = function (...args) {
+  logMessages.push({ type: "info", message: args });
+  originalInfo.apply(console, args);
+};
+
+console.debug = function (...args) {
+  logMessages.push({ type: "debug", message: args });
+  originalDebug.apply(console, args);
+};
+
+console.dir = function (...args) {
+  logMessages.push({ type: "dir", message: args });
+  originalDir.apply(console, args);
+};
+
+console.trace = function (...args) {
+  logMessages.push({ type: "trace", message: args });
+  originalTrace.apply(console, args);
+};
+
+console.table = function (...args) {
+  logMessages.push({ type: "table", message: args });
+  originalTable.apply(console, args);
+};
+
+console.group = function (...args) {
+  logMessages.push({ type: "group", message: args });
+  originalGroup.apply(console, args);
+};
+
+console.groupEnd = function (...args) {
+  logMessages.push({ type: "groupEnd", message: args });
+  originalGroupEnd.apply(console, args);
+};
+
+console.time = function (...args) {
+  logMessages.push({ type: "time", message: args });
+  originalTime.apply(console, args);
+};
+
+console.timeEnd = function (...args) {
+  logMessages.push({ type: "timeEnd", message: args });
+  originalTimeEnd.apply(console, args);
+};
+
+console.timeLog = function (...args) {
+  logMessages.push({ type: "timeLog", message: args });
+  originalTimeLog.apply(console, args);
+};
 
 window.fetch = async (...args) => {
   try {
     const response = await originalFetch(...args);
-    if (!response.ok) {
+    const clone = response.clone();
+    if (!clone.ok) {
       logMessages.push({
         type: "fetch-error",
         message: {
-          url: response.url,
-          status: response.status,
-          statusText: response.statusText,
-          message: await response.text(),
+          url: clone.url,
+          status: clone.status,
+          statusText: clone.statusText,
+          message: clone.text(),
         },
       });
     }
@@ -56,6 +119,8 @@ XMLHttpRequest.prototype.open = function (
 XMLHttpRequest.prototype.send = function (body?: Document | BodyInit | null) {
   this.addEventListener("load", function () {
     if (this.status >= 400) {
+      const stack = new Error().stack;
+      const location = stack?.split("\n")[2].trim();
       logMessages.push({
         type: "xhr-error",
         message: {
@@ -65,11 +130,14 @@ XMLHttpRequest.prototype.send = function (body?: Document | BodyInit | null) {
           statusText: this.statusText,
           response: this.responseText,
         },
+        where: location || "unknown location",
       });
     }
   });
 
   this.addEventListener("error", function () {
+    const stack = new Error().stack;
+    const location = stack?.split("\n")[2].trim();
     logMessages.push({
       type: "xhr-error",
       message: {
@@ -79,21 +147,11 @@ XMLHttpRequest.prototype.send = function (body?: Document | BodyInit | null) {
         statusText: this.statusText,
         response: this.responseText,
       },
+      where: location || "unknown location",
     });
   });
 
   return originalXhrSend.apply(this, arguments as any);
-};
-XMLHttpRequest.prototype.open = function (
-  method: string,
-  url: string,
-  async?: boolean,
-  user?: string | null,
-  password?: string | null
-) {
-  (this as any)._requestMethod = method;
-  (this as any)._requestUrl = url;
-  return originalXhrOpen.apply(this, arguments as any);
 };
 
 /**
