@@ -1,38 +1,7 @@
 import { consoleMethods } from "./utils";
 
 let logMessages: Array<{ type: string; message: any }> = [];
-
-const originalLog = console.log;
-const originalWarn = console.warn;
-const originalError = console.error;
-const originalInfo = console.info;
-const originalDebug = console.debug;
 const originalFetch = window.fetch; /** intercept fetch request */
-
-console.log = function (...args) {
-  logMessages.push({ type: "log", message: args });
-  originalLog.apply(console, args);
-};
-
-console.warn = function (...args) {
-  logMessages.push({ type: "warn", message: args });
-  originalWarn.apply(console, args);
-};
-
-console.error = function (...args) {
-  logMessages.push({ type: "error", message: args });
-  originalError.apply(console, args);
-};
-
-console.info = function (...args) {
-  logMessages.push({ type: "info", message: args });
-  originalInfo.apply(console, args);
-};
-
-console.debug = function (...args) {
-  logMessages.push({ type: "debug", message: args });
-  originalDebug.apply(console, args);
-};
 
 consoleMethods.forEach((method) => {
   const originalMethod = console[method] as (...args: any[]) => void;
@@ -48,16 +17,6 @@ window.fetch = async (...args) => {
     if (!response.ok) {
       logMessages.push({
         type: "fetch-error",
-        message: {
-          url: response.url,
-          status: response.status,
-          statusText: response.statusText,
-          message: await response.text(),
-        },
-      });
-    } else if (response.ok) {
-      logMessages.push({
-        type: "fetch-success",
         message: {
           url: response.url,
           status: response.status,
@@ -139,8 +98,11 @@ XMLHttpRequest.prototype.open = function (
 
 /**
  * @description getLogMessages function to get all log messages
+ *
  * @param {boolean} skip_last You can skip your last console log with the boolean params.
+ *
  * @returns {any[]} It will return everything what your log in your entire project.
+ *
  * @example console.log(getLogMessages(false)) // skip_last is true in default mode.
  */
 export function getLogMessages(skip_last: boolean = true): any[] {
