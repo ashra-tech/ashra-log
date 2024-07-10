@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getLogMessages } from "../../../src/index";
+import { getLogMessages, restoreConsole } from "../../../src/index";
 
 const LogViewer = () => {
   const [logs, setLogs] = useState<any[]>([]);
@@ -18,6 +18,9 @@ const LogViewer = () => {
 
   const handleClick = () => {
     setLogs(getLogMessages());
+    console.log("log: ", getLogMessages());
+
+    restoreConsole();
     alert(JSON.stringify(logs, null, 2)); // Display logs as an alert (you can customize this as needed)
   };
   return (
