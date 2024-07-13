@@ -50,8 +50,11 @@ console.log(getLogMessage(false)); // you can pass skip_last as params - which i
 
 - **React/Nextjs Uses**
 
+**Before use `ashra-log` you have to must make it's clinet components**
+
 ```ts
 // src/App.tsx
+"use client";
 import { useEffect, useState } from "react";
 import { getLogMessages } from "ashra-log";
 

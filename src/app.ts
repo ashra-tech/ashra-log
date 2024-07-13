@@ -40,7 +40,7 @@ const captureErrors = () => {
   if (typeof window !== "undefined") {
     window.onerror = (message, source, lineno, colno, error) => {
       output.push({
-        type: "error",
+        type: error ? error.name : "error",
         message: [message, source, lineno, colno, error],
         where: `${source}:${lineno}:${colno}`,
       });
@@ -48,7 +48,7 @@ const captureErrors = () => {
 
     window.onunhandledrejection = (event) => {
       output.push({
-        type: "unhandledrejection",
+        type: event.reason ? event.reason.name : "unhandledrejection",
         message: [event.reason],
         where: getStackTrace(),
       });
@@ -56,7 +56,7 @@ const captureErrors = () => {
   } else {
     process.on("uncaughtException", (error) => {
       output.push({
-        type: "error",
+        type: error.name,
         message: [error],
         where: getStackTrace(),
       });
@@ -64,7 +64,7 @@ const captureErrors = () => {
 
     process.on("unhandledRejection", (reason) => {
       output.push({
-        type: "unhandledrejection",
+        type: reason instanceof Error ? reason.name : "unhandledrejection",
         message: [reason],
         where: getStackTrace(),
       });
