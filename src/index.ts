@@ -1,1 +1,2 @@
-export * from "./overrideConsole";
+// export * from "./overrideConsole";
+export { getLogMessages, restoreConsole } from "./app";

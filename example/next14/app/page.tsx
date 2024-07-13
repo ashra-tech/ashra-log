@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getLogMessages } from "ashra-log";
+import { getLogMessages, restoreConsole } from "../../../src/index";
 
 export default function Home() {
   const [logs, setLogs] = useState<any[]>([]);
@@ -16,8 +16,15 @@ export default function Home() {
   }, []);
 
   const handleClick = () => {
+    console.log("handle clicked");
+    ("use client");
     const logs = getLogMessages(false);
     setLogs(logs);
+
+    console.log("logs", logs);
+
+    restoreConsole();
+
     alert(JSON.stringify(logs, null, 2)); // Display logs as an alert (you can customize this as needed)
   };
 

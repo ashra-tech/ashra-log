@@ -4,3 +4,4 @@ yarn.lock
 package-log.json
 lib
 dist
+bot.js
