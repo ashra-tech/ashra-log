@@ -23,6 +23,7 @@ const LogViewer = () => {
     restoreConsole();
     alert(JSON.stringify(logs, null, 2)); // Display logs as an alert (you can customize this as needed)
   };
+
   return (
     <div>
       <button onClick={handleClick}>Click Me</button>
@@ -35,7 +36,10 @@ const LogViewer = () => {
       </div>
       <div style={{ background: "blue" }}>
         {data.map((it: any, i) => (
-          <h1 key={i}>hello {it?.name}</h1>
+          <>
+            <h1 key={i}>hello {it?.name}</h1>
+            <p>{it.faill == "sabbir" ? "hell" : "2"}</p>
+          </>
         ))}
       </div>
     </div>
